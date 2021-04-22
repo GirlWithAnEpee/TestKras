@@ -15,12 +15,45 @@ namespace TestKras
     public partial class Form1 : Form
     {
         int parties, noms, mts; //количество партий, номенклатур и аппаратов, соответствено
+        //для хранения информации о партиях, номенклатурах и аппаратах
         Dictionary<int, string> Parties = new Dictionary<int, string>();
         Dictionary<int, string> Noms = new Dictionary<int, string>();
-        Dictionary<int, string> Mts = new Dictionary<int, string>(); //для хранения информации о партиях, номенклатурах и аппаратах
+        Dictionary<int, string> Mts = new Dictionary<int, string>();
+        //для хранения информации о времени обработки
+        List<List<int>> times = new List<List<int>>();
         public Form1()
-        {
+        { 
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string filename = Get_file();
+            textBox1.Text = filename;
+            Parties = Read_file(filename);
+            parties = Parties.Count();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string filename = Get_file();
+            textBox2.Text = filename;
+            Noms = Read_file(filename);
+            noms = Noms.Count();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string filename = Get_file();
+            textBox3.Text = filename;
+            Mts = Read_file(filename);
+            mts = Mts.Count();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string filename = Get_file();
+            textBox4.Text = filename;
         }
 
         private string Get_file()

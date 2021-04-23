@@ -19,8 +19,14 @@ namespace TestKras
         Dictionary<int, string> Parties = new Dictionary<int, string>();
         Dictionary<int, string> Noms = new Dictionary<int, string>();
         Dictionary<int, string> Mts = new Dictionary<int, string>();
+
         //для хранения информации о времени обработки
         List<Dictionary<int, int>> times = new List<Dictionary<int, int>>();
+        // список для подсчёта единиц номенклатур обработанных каждой печью
+        List<List<int>> UnitstoMts = new List<List<int>>();
+        //для хранения приоритетов обработки номенклатур в печах
+        //Priority[id_nom]->[top_1_mts, top_2_mts, ...]
+        List<List<int>> Priority = new List<List<int>>();
         public Form1()
         { 
             InitializeComponent();
@@ -52,6 +58,7 @@ namespace TestKras
                 }
             }
             dataGridView1.RowHeadersWidth = dataGridView1.RowHeadersWidth + (7 * maxString);
+            button3.Enabled = true;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -60,6 +67,12 @@ namespace TestKras
             textBox3.Text = filename;
             Mts = Read_file(filename);
             mts = Mts.Count();
+            dataGridView1.ColumnCount = mts;
+            for (int i = 0; i < mts; i++)
+            {
+                dataGridView1.Columns[i].HeaderText = Mts[i];
+            }
+            button4.Enabled = true;
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -70,6 +83,9 @@ namespace TestKras
             for (int i = 0; i < noms; i++)
             {
                 for (int j = 0; j < mts; j++)
+                // заполняем массив приоритетов
+                // ставим большое время потому что неизвестно что в ячейке первой - может пустота
+                // int minT == 1000;
                 {
                     if (times[i].ContainsKey(j))
                     {
@@ -77,6 +93,7 @@ namespace TestKras
                     }
                 }
             }
+            button1.Enabled = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -88,11 +105,154 @@ namespace TestKras
         {
             openFileDialog1.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
             openFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();
+            openFileDialog1.FileName = "";
             if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
                 return "Error";
             // получаем выбранный файл
             else
                 return openFileDialog1.FileName;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (Parties.Count() == 0)
+                MessageBox.Show("Вы не загрузили данные о партиях!");
+            
+            else if (Noms.Count() == 0)
+                MessageBox.Show("Вы не загрузили данные о номенклатурах!");
+            else
+            {
+                // обработка партии
+                // список для подсчёта времени работы каждой печи
+                List<int> MtsTimes = new List<int>();
+
+                // создаём вложенный исписок и заполняем оба нулями
+                for (int i = 0; i < mts; i++)
+                {
+                    // тайминги
+                    MtsTimes.Add(0);
+                    // единицы номенклатур
+                    List<int> tmpl = new List<int>();
+                    for (int j = 0; j < noms; j++)
+                    {
+                        tmpl.Add(0);
+                    }
+                    UnitstoMts.Add(tmpl);
+                }
+
+                for (int i = 0; i < parties; i++)
+                {
+                    switch (Parties[i])
+                    {
+                        case "0":
+                            // золото идёт в "золотую" печ
+                            if (MtsTimes[1] < MtsTimes[0])
+                            {
+                                UnitstoMts[1][Convert.ToInt32(Parties[i])]++;
+                                // заполняем словарь с партями инфой куда отправили партию
+                                Parties[i] = Noms[Convert.ToInt32(Parties[i])] + "-> " + Mts[1] + " at " + MtsTimes[1];
+                                // добавляем время работы печи
+                                MtsTimes[1] += 20;
+
+                            }
+                            // иначе суём в серебрянную печ
+                            else
+                            {
+                                UnitstoMts[0][Convert.ToInt32(Parties[i])]++;
+                                // заполняем словарь с партями инфой куда отправили партию
+                                Parties[i] = Noms[Convert.ToInt32(Parties[i])] + "-> " + Mts[0] + " at " + MtsTimes[0];
+                                // добавляем время работы печи
+                                MtsTimes[0] += 40;
+                            }
+                            break;
+                        case "1":
+                            //серебро сначала в печ 1 потом в печ 2 потом уже в 3
+                            if (MtsTimes[0] < MtsTimes[1])
+                            {
+                                UnitstoMts[0][Convert.ToInt32(Parties[i])]++;
+                                // заполняем словарь с партями инфой куда отправили партию
+                                Parties[i] = Noms[Convert.ToInt32(Parties[i])] + "-> " + Mts[0] + " at " + MtsTimes[0];
+                                // добавляем время работы печи
+                                MtsTimes[0] += 20;
+                            }
+                            // иначе суём в серебрянную печ
+                            else
+                            {
+                                if (MtsTimes[1] < MtsTimes[2])
+                                {
+                                    UnitstoMts[1][Convert.ToInt32(Parties[i])]++;
+                                    // заполняем словарь с партями инфой куда отправили партию
+                                    Parties[i] = Noms[Convert.ToInt32(Parties[i])] + "-> " + Mts[1] + " at " + MtsTimes[1];
+                                    // добавляем время работы печи
+                                    MtsTimes[1] += 30;
+                                }
+                                else
+                                {
+                                    UnitstoMts[2][Convert.ToInt32(Parties[i])]++;
+                                    // заполняем словарь с партями инфой куда отправили партию
+                                    Parties[i] = Noms[Convert.ToInt32(Parties[i])] + "-> " + Mts[2] + " at " + MtsTimes[2];
+                                    // добавляем время работы печи
+                                    MtsTimes[2] += 40;
+                                }
+
+                            }
+                            break;
+                        case "2":
+                            if (MtsTimes[1] < MtsTimes[2])
+                            {
+                                UnitstoMts[1][Convert.ToInt32(Parties[i])]++;
+                                // заполняем словарь с партями инфой куда отправили партию
+                                Parties[i] = Noms[Convert.ToInt32(Parties[i])] + "-> " + Mts[1] + " at " + MtsTimes[1];
+                                // добавляем время работы печи
+                                MtsTimes[1] += 40;
+                            }
+                            else
+                            {
+                                UnitstoMts[2][Convert.ToInt32(Parties[i])]++;
+                                // заполняем словарь с партями инфой куда отправили партию
+                                Parties[i] = Noms[Convert.ToInt32(Parties[i])] + "-> " + Mts[2] + " at " + MtsTimes[2];
+                                // добавляем время работы печи
+                                MtsTimes[2] += 50;
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+  
+                Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+                Workbook wb = oXL.Workbooks.Add(XlSheetType.xlWorksheet);
+                Worksheet ws = (Worksheet)oXL.ActiveSheet;
+                oXL.Visible = true;
+                ws.Cells[1, 1] = "Партия";
+                ws.Cells[1, 2] = "Действия";
+                for (int i = 0; i < parties; i++)
+                {
+                    ws.Cells[i + 2, 1] = i.ToString();
+                    ws.Cells[i + 2, 2] = Parties[i];
+                }
+                // разбивка по номенклатурам/печам
+
+                // заголовки печей и металлов
+
+                for (int i = 0; i < noms; i++)
+                {
+                    ws.Cells[parties + 4, 2 + i] = Mts[i];
+                    ws.Cells[parties + 5 + i, 1] = Noms[i];
+                }
+                for (int i = 0; i < noms; i++)
+                {
+                    for (int j = 0; j < noms; j++)
+                    {
+                        ws.Cells[parties + 5 + j, 2 + i] = UnitstoMts[j][i];
+                    }
+                }
+                wb.SaveAs("c:\\plan.xlsx", Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookDefault, Type.Missing, Type.Missing,
+                false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange,
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                wb.Close();
+            }
         }
 
         private Dictionary<int, string> Read_file(string filename)
@@ -116,7 +276,7 @@ namespace TestKras
             {
                 result.Add(Convert.ToInt32(IDarray[i]), Namearray[i]);
             }
-            //MessageBox.Show(result[11].ToString());
+            ObjWorkBook.Close();
             return result;
         }
         private List<Dictionary<int, int>> Read_file_time(string filename)
@@ -163,6 +323,7 @@ namespace TestKras
                 tmp = IDarray[i];
                 i--;
             }
+            ObjWorkBook.Close();
             return result;
         }
     }

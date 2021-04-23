@@ -1,0 +1,10 @@
+C:\Users\ostva\TestKras\TestKras\bin\Debug\TestKras.exe.config
+C:\Users\ostva\TestKras\TestKras\bin\Debug\TestKras.exe
+C:\Users\ostva\TestKras\TestKras\bin\Debug\TestKras.pdb
+C:\Users\ostva\TestKras\TestKras\obj\Debug\TestKras.Form1.resources
+C:\Users\ostva\TestKras\TestKras\obj\Debug\TestKras.Properties.Resources.resources
+C:\Users\ostva\TestKras\TestKras\obj\Debug\TestKras.csproj.GenerateResource.cache
+C:\Users\ostva\TestKras\TestKras\obj\Debug\TestKras.csproj.CoreCompileInputs.cache
+C:\Users\ostva\TestKras\TestKras\obj\Debug\TestKras.exe
+C:\Users\ostva\TestKras\TestKras\obj\Debug\TestKras.pdb
+C:\Users\ostva\TestKras\TestKras\obj\Debug\TestKras.csprojAssemblyReference.cache

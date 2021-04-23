@@ -43,6 +43,7 @@ namespace TestKras
             this.button4 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,7 +54,7 @@ namespace TestKras
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(28, 24);
+            this.label1.Location = new System.Drawing.Point(28, 223);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(173, 13);
             this.label1.TabIndex = 0;
@@ -61,7 +62,8 @@ namespace TestKras
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(573, 47);
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(573, 249);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -71,21 +73,21 @@ namespace TestKras
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(31, 49);
+            this.textBox1.Location = new System.Drawing.Point(31, 249);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(503, 20);
             this.textBox1.TabIndex = 2;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(31, 114);
+            this.textBox2.Location = new System.Drawing.Point(31, 52);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(503, 20);
             this.textBox2.TabIndex = 5;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(573, 112);
+            this.button2.Location = new System.Drawing.Point(573, 49);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 4;
@@ -96,7 +98,7 @@ namespace TestKras
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(28, 89);
+            this.label2.Location = new System.Drawing.Point(28, 25);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(210, 13);
             this.label2.TabIndex = 3;
@@ -104,14 +106,15 @@ namespace TestKras
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(31, 177);
+            this.textBox3.Location = new System.Drawing.Point(31, 117);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(503, 20);
             this.textBox3.TabIndex = 8;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(573, 175);
+            this.button3.Enabled = false;
+            this.button3.Location = new System.Drawing.Point(573, 114);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 7;
@@ -122,7 +125,7 @@ namespace TestKras
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(28, 152);
+            this.label3.Location = new System.Drawing.Point(28, 88);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(210, 26);
             this.label3.TabIndex = 6;
@@ -130,14 +133,15 @@ namespace TestKras
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(31, 241);
+            this.textBox4.Location = new System.Drawing.Point(31, 184);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(503, 20);
             this.textBox4.TabIndex = 11;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(573, 239);
+            this.button4.Enabled = false;
+            this.button4.Location = new System.Drawing.Point(573, 184);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 10;
@@ -148,7 +152,7 @@ namespace TestKras
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(28, 216);
+            this.label4.Location = new System.Drawing.Point(28, 155);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(233, 26);
             this.label4.TabIndex = 9;
@@ -157,16 +161,27 @@ namespace TestKras
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(31, 285);
+            this.dataGridView1.Location = new System.Drawing.Point(31, 300);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(377, 235);
             this.dataGridView1.TabIndex = 12;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(495, 313);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(111, 23);
+            this.button5.TabIndex = 13;
+            this.button5.Text = "Рассчитать план";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(672, 562);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.button4);
@@ -182,7 +197,7 @@ namespace TestKras
             this.Controls.Add(this.label1);
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Планирование производства";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -206,6 +221,7 @@ namespace TestKras
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button button5;
     }
 }
 
